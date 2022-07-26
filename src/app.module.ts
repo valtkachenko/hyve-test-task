@@ -5,6 +5,8 @@ import { DataSource } from 'typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { ToDoListModule } from './to-do-list/to-do-list.module';
+import { ToDoItemsModule } from './to-do-items/to-do-items.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { UsersModule } from './users/users.module';
     }),
     ConfigModule.forRoot(),
     UsersModule,
+    ToDoListModule,
+    ToDoItemsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

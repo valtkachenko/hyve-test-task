@@ -1,6 +1,6 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -10,6 +10,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private dataSource: DataSource,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -25,14 +26,23 @@ export class UsersService {
     }
   }
 
-  findAll() {
-    return this.usersRepository.find();
+  async findAll() {
+    return await this.dataSource
+      .getRepository(User)
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.toDoLists', 'toDoLists')
+      .leftJoinAndSelect('toDoLists.toDoItems', 'items')
+      .getMany();
   }
 
-  findOne(id: number) {
-    return this.usersRepository.findOneBy({
-      id,
-    });
+  async findOne(id: number) {
+    return await this.dataSource
+      .getRepository(User)
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.toDoLists', 'toDoLists')
+      .leftJoinAndSelect('toDoLists.toDoItems', 'items')
+      .where('user.id = :id', { id })
+      .getOne();
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {

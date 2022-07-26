@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, JoinTable, OneToMany } from 'typeorm';
+import { ToDoList } from '../../to-do-list/entities/to-do-list.entity';
 
 @Entity()
 export class User {
@@ -13,4 +14,10 @@ export class User {
 
   @Column({ default: false })
   isActive: boolean;
+
+  @OneToMany(() => ToDoList, (toDoList) => toDoList.user, {
+    cascade: true,
+  })
+  @JoinTable()
+  toDoLists: ToDoList[];
 }
