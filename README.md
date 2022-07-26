@@ -28,6 +28,14 @@ Hyve test task. A dockerized RESTful NodeJS application that manages a database 
 list for each user. NestJS is used as a server-side application framework.
 
 ## Running the app
+
 ```bash
 $ docker-compose up #(if it's no works try to add "sudo")
+```
+## Removing docker-compose
+
+Below is an example of a command to clean all containers, images, volumes, networks, and undefined containers created with docker-compose.
+
+```bash
+$ docker-compose down --rmi all -v --remove-orphans #(if it's no works try to add "sudo")
 ```
