@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinTable, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  JoinTable,
+  OneToMany,
+} from 'typeorm';
 import { ToDoList } from '../../to-do-list/entities/to-do-list.entity';
 
 @Entity()

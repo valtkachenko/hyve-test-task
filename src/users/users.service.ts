@@ -13,7 +13,7 @@ export class UsersService {
     private dataSource: DataSource,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<User> {
     try {
       const newUser = new User();
       newUser.firstName = createUserDto.firstName;
@@ -26,7 +26,7 @@ export class UsersService {
     }
   }
 
-  async findAll() {
+  async findAll(): Promise<User[]> {
     return await this.dataSource
       .getRepository(User)
       .createQueryBuilder('user')
@@ -35,7 +35,7 @@ export class UsersService {
       .getMany();
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<User> {
     return await this.dataSource
       .getRepository(User)
       .createQueryBuilder('user')
@@ -45,16 +45,18 @@ export class UsersService {
       .getOne();
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     try {
       await this.usersRepository.update(id, updateUserDto);
+
+      return await this.usersRepository.findOneBy({ id });
     } catch (error) {
       console.log(error);
       throw new HttpException('Unknown', 520);
     }
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<void> {
     try {
       await this.usersRepository.delete(id);
     } catch (error) {

@@ -1,5 +1,11 @@
 import { User } from 'src/users/entities/user.entity';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ToDoItems } from '../../to-do-items/entities/to-do-items.entity';
 
 @Entity()

@@ -5,8 +5,8 @@ import { CreateUserDto } from './create-user.dto';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsOptional()
-  @IsNotEmpty()
   @IsBoolean()
+  @IsNotEmpty()
   @ApiPropertyOptional({
     enum: [true, false],
   })

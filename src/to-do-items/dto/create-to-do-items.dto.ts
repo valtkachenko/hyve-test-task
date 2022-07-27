@@ -2,16 +2,16 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsDefined, IsNotEmpty, IsNumberString } from 'class-validator';
 
 export class CreateToDoItemsDto {
-  @IsDefined()
   @IsNotEmpty()
+  @IsDefined()
   @ApiProperty({
     enum: ['Test title'],
   })
   title: string;
 
-  @IsDefined()
-  @IsNotEmpty()
   @IsNumberString()
+  @IsNotEmpty()
+  @IsDefined()
   @ApiProperty({
     enum: ['1'],
   })
