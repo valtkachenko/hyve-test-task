@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   HttpCode,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { ToDoListService } from './to-do-list.service';
 import { CreateToDoListDto } from './dto/create-to-do-list.dto';
@@ -30,9 +32,10 @@ export class ToDoListController {
 
   @Get(':id')
   findOne(@Param('id') id: string): Promise<ToDoList> {
-    console.log('id', id);
-
-    return this.toDoListService.findOne(+id);
+    if (isNaN(+id)) {
+      throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
+    }
+    return this.toDoListService.findOne(+id || 0);
   }
 
   @Patch(':id')
@@ -44,6 +47,9 @@ export class ToDoListController {
     @Param('id') id: string,
     @Body() updateToDoListDto: UpdateToDoListDto,
   ): Promise<ToDoList> {
+    if (isNaN(+id)) {
+      throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
+    }
     return this.toDoListService.update(+id, updateToDoListDto);
   }
 

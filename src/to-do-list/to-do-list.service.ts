@@ -70,7 +70,6 @@ export class ToDoListService {
           throw new Error('User not found.');
         }
       }
-
       // eslint-disable-next-line
       const { userId, ...rest } = updateToDoListDto;
       const updatedToDoList = user ? { ...rest, user } : rest;

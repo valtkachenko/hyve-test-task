@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   HttpCode,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -29,6 +31,9 @@ export class UsersController {
 
   @Get(':id')
   findOne(@Param('id') id: string): Promise<User> {
+    if (isNaN(+id)) {
+      throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
+    }
     return this.usersService.findOne(+id);
   }
 
@@ -37,6 +42,9 @@ export class UsersController {
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
+    if (isNaN(+id)) {
+      throw new HttpException('Bad request', HttpStatus.BAD_REQUEST);
+    }
     return this.usersService.update(+id, updateUserDto);
   }
 
